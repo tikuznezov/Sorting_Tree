@@ -53,9 +53,9 @@ int global_error = 0;
 
 #ifdef _DEBUG
 #define NAMED_ASSERT(pointer, err_code, name_of_element)                                                \
-    char user_reply[MAX_STR_LEN] = "";                                                                  \
     if (global_error != 0)                                                                              \
         {                                                                                               \
+            char user_reply[MAX_STR_LEN] = "";                                                          \
             PR("\n\n--> Assert global error not equal 0.\n");                                           \
             PR("Called function \"%s\".\n", __PRETTY_FUNCTION__);                                       \
             PR(PRED "--> Global error = %d. Do you want to continue? (y/n)\n" DEF_COL, global_error);   \
@@ -65,6 +65,7 @@ int global_error = 0;
         }                                                                                               \
         if (pointer == NULL)                                                                            \
         {                                                                                               \
+            char user_reply[MAX_STR_LEN] = "";                                                          \
             global_error = err_code;                                                                    \
                                                                                                         \
             PR(PRED "\n\n--> \"%s\" get %s as null pointer!\n" DEF_COL, __FUNCTION__, name_of_element); \
@@ -72,6 +73,7 @@ int global_error = 0;
             scanf("%s", user_reply);                                                                    \
             if (strncmp(user_reply, "yes", 1) == 0)                                                     \
                 exit(err_code);                                                                         \
+            global_error = 0;                                                                           \
         }
 #else
     #define NAMED_ASSERT(pointer, err_code, name_of_element) assert(pointer);
@@ -83,6 +85,31 @@ void ClearTerm(void)
     int symbol = 0;
     while ((symbol != EOF) && (symbol != '\n'))
         {symbol = getchar();}
+}
+
+/// @brief calculate file size by stat structure
+/// @param file_name file name
+/// @return file size in bites
+ssize_t SizeofFile(const char *file_name)
+{
+    PR_FST;
+    assert(file_name);
+
+    struct stat statistics = {};
+    ssize_t fsize = -1;
+
+    if (stat(file_name, &statistics) == 0)
+    {
+        fsize = (ssize_t)statistics.st_size;
+        PR("Размер файла: %zd байт\n", fsize);
+    }
+    else 
+    {
+        perror("Ошибка при вызове stat");
+    }
+
+    PR_FED;
+    return fsize;
 }
 
 #endif

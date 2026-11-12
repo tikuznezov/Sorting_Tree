@@ -7,16 +7,304 @@ node [shape = Mrecord, style = filled, fillcolor = "#626ae0", fontcolor = "#ffff
 # ZERO NODE
 	n0x0 [label="Root parent"];
 
-	n0x152605fa0 [label="{Tree element 0x152605fa0.| arg = 1488.12  | parent = 0x0 |{ left = 0x152605d10 | right = 0x0 }}"];
-	n0x152605fa0:n -> n0x0:s [color = green];
-	n0x152605fa0 -> n0x152605d10;
-	NULL_R_0x152605fa0 [label="NULL", fillcolor = "#000000"];
-	n0x152605fa0 -> NULL_R_0x152605fa0;
+	n0x603000002530 [label="{Tree element 0x603000002530.| arg = 67 | parent = 0x0 |{ left = 0x603000002560 | right = 0x603000002590 }}"];
+	n0x603000002530:n -> n0x0:s [color = green];
+	n0x603000002530 -> n0x603000002560;
+	n0x603000002530 -> n0x603000002590;
 
-	n0x152605d10 [label="{Tree element 0x152605d10.| arg = 111      | parent = 0x152605fa0 |{ left = 0x0 | right = 0x0 }}"];
-	n0x152605d10:n -> n0x152605fa0:s [color = green];
-	NULL_L_0x152605d10 [label="NULL", fillcolor = "#000000"];
-	n0x152605d10 -> NULL_L_0x152605d10;
-	NULL_R_0x152605d10 [label="NULL", fillcolor = "#000000"];
-	n0x152605d10 -> NULL_R_0x152605d10;
+	n0x603000002560 [label="{Tree element 0x603000002560.| arg = 42 | parent = 0x603000002530 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002560:n -> n0x603000002530:s [color = green];
+	NULL_L_0x603000002560 [label="NULL", fillcolor = "#000000"];
+	n0x603000002560 -> NULL_L_0x603000002560;
+	NULL_R_0x603000002560 [label="NULL", fillcolor = "#000000"];
+	n0x603000002560 -> NULL_R_0x603000002560;
+
+	n0x603000002590 [label="{Tree element 0x603000002590.| arg = 807 | parent = 0x603000002530 |{ left = 0x6030000025c0 | right = 0x603000002c50 }}"];
+	n0x603000002590:n -> n0x603000002530:s [color = green];
+	n0x603000002590 -> n0x6030000025c0;
+	n0x603000002590 -> n0x603000002c50;
+
+	n0x6030000025c0 [label="{Tree element 0x6030000025c0.| arg = 249 | parent = 0x603000002590 |{ left = 0x6030000025f0 | right = 0x6030000027d0 }}"];
+	n0x6030000025c0:n -> n0x603000002590:s [color = green];
+	n0x6030000025c0 -> n0x6030000025f0;
+	n0x6030000025c0 -> n0x6030000027d0;
+
+	n0x6030000025f0 [label="{Tree element 0x6030000025f0.| arg = 73 | parent = 0x6030000025c0 |{ left = 0x0 | right = 0x603000002620 }}"];
+	n0x6030000025f0:n -> n0x6030000025c0:s [color = green];
+	NULL_L_0x6030000025f0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000025f0 -> NULL_L_0x6030000025f0;
+	n0x6030000025f0 -> n0x603000002620;
+
+	n0x603000002620 [label="{Tree element 0x603000002620.| arg = 165 | parent = 0x6030000025f0 |{ left = 0x603000002650 | right = 0x603000002740 }}"];
+	n0x603000002620:n -> n0x6030000025f0:s [color = green];
+	n0x603000002620 -> n0x603000002650;
+	n0x603000002620 -> n0x603000002740;
+
+	n0x603000002650 [label="{Tree element 0x603000002650.| arg = 157 | parent = 0x603000002620 |{ left = 0x603000002680 | right = 0x0 }}"];
+	n0x603000002650:n -> n0x603000002620:s [color = green];
+	n0x603000002650 -> n0x603000002680;
+	NULL_R_0x603000002650 [label="NULL", fillcolor = "#000000"];
+	n0x603000002650 -> NULL_R_0x603000002650;
+
+	n0x603000002680 [label="{Tree element 0x603000002680.| arg = 99 | parent = 0x603000002650 |{ left = 0x6030000026b0 | right = 0x603000002710 }}"];
+	n0x603000002680:n -> n0x603000002650:s [color = green];
+	n0x603000002680 -> n0x6030000026b0;
+	n0x603000002680 -> n0x603000002710;
+
+	n0x6030000026b0 [label="{Tree element 0x6030000026b0.| arg = 97 | parent = 0x603000002680 |{ left = 0x6030000026e0 | right = 0x0 }}"];
+	n0x6030000026b0:n -> n0x603000002680:s [color = green];
+	n0x6030000026b0 -> n0x6030000026e0;
+	NULL_R_0x6030000026b0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000026b0 -> NULL_R_0x6030000026b0;
+
+	n0x6030000026e0 [label="{Tree element 0x6030000026e0.| arg = 91 | parent = 0x6030000026b0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x6030000026e0:n -> n0x6030000026b0:s [color = green];
+	NULL_L_0x6030000026e0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000026e0 -> NULL_L_0x6030000026e0;
+	NULL_R_0x6030000026e0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000026e0 -> NULL_R_0x6030000026e0;
+
+	n0x603000002710 [label="{Tree element 0x603000002710.| arg = 149 | parent = 0x603000002680 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002710:n -> n0x603000002680:s [color = green];
+	NULL_L_0x603000002710 [label="NULL", fillcolor = "#000000"];
+	n0x603000002710 -> NULL_L_0x603000002710;
+	NULL_R_0x603000002710 [label="NULL", fillcolor = "#000000"];
+	n0x603000002710 -> NULL_R_0x603000002710;
+
+	n0x603000002740 [label="{Tree element 0x603000002740.| arg = 169 | parent = 0x603000002620 |{ left = 0x0 | right = 0x603000002770 }}"];
+	n0x603000002740:n -> n0x603000002620:s [color = green];
+	NULL_L_0x603000002740 [label="NULL", fillcolor = "#000000"];
+	n0x603000002740 -> NULL_L_0x603000002740;
+	n0x603000002740 -> n0x603000002770;
+
+	n0x603000002770 [label="{Tree element 0x603000002770.| arg = 228 | parent = 0x603000002740 |{ left = 0x6030000027a0 | right = 0x0 }}"];
+	n0x603000002770:n -> n0x603000002740:s [color = green];
+	n0x603000002770 -> n0x6030000027a0;
+	NULL_R_0x603000002770 [label="NULL", fillcolor = "#000000"];
+	n0x603000002770 -> NULL_R_0x603000002770;
+
+	n0x6030000027a0 [label="{Tree element 0x6030000027a0.| arg = 194 | parent = 0x603000002770 |{ left = 0x0 | right = 0x0 }}"];
+	n0x6030000027a0:n -> n0x603000002770:s [color = green];
+	NULL_L_0x6030000027a0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000027a0 -> NULL_L_0x6030000027a0;
+	NULL_R_0x6030000027a0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000027a0 -> NULL_R_0x6030000027a0;
+
+	n0x6030000027d0 [label="{Tree element 0x6030000027d0.| arg = 658 | parent = 0x6030000025c0 |{ left = 0x603000002800 | right = 0x603000002b90 }}"];
+	n0x6030000027d0:n -> n0x6030000025c0:s [color = green];
+	n0x6030000027d0 -> n0x603000002800;
+	n0x6030000027d0 -> n0x603000002b90;
+
+	n0x603000002800 [label="{Tree element 0x603000002800.| arg = 272 | parent = 0x6030000027d0 |{ left = 0x603000002830 | right = 0x603000002860 }}"];
+	n0x603000002800:n -> n0x6030000027d0:s [color = green];
+	n0x603000002800 -> n0x603000002830;
+	n0x603000002800 -> n0x603000002860;
+
+	n0x603000002830 [label="{Tree element 0x603000002830.| arg = 267 | parent = 0x603000002800 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002830:n -> n0x603000002800:s [color = green];
+	NULL_L_0x603000002830 [label="NULL", fillcolor = "#000000"];
+	n0x603000002830 -> NULL_L_0x603000002830;
+	NULL_R_0x603000002830 [label="NULL", fillcolor = "#000000"];
+	n0x603000002830 -> NULL_R_0x603000002830;
+
+	n0x603000002860 [label="{Tree element 0x603000002860.| arg = 544 | parent = 0x603000002800 |{ left = 0x603000002890 | right = 0x603000002ad0 }}"];
+	n0x603000002860:n -> n0x603000002800:s [color = green];
+	n0x603000002860 -> n0x603000002890;
+	n0x603000002860 -> n0x603000002ad0;
+
+	n0x603000002890 [label="{Tree element 0x603000002890.| arg = 440 | parent = 0x603000002860 |{ left = 0x6030000028c0 | right = 0x603000002a10 }}"];
+	n0x603000002890:n -> n0x603000002860:s [color = green];
+	n0x603000002890 -> n0x6030000028c0;
+	n0x603000002890 -> n0x603000002a10;
+
+	n0x6030000028c0 [label="{Tree element 0x6030000028c0.| arg = 327 | parent = 0x603000002890 |{ left = 0x6030000028f0 | right = 0x603000002950 }}"];
+	n0x6030000028c0:n -> n0x603000002890:s [color = green];
+	n0x6030000028c0 -> n0x6030000028f0;
+	n0x6030000028c0 -> n0x603000002950;
+
+	n0x6030000028f0 [label="{Tree element 0x6030000028f0.| arg = 303 | parent = 0x6030000028c0 |{ left = 0x603000002920 | right = 0x0 }}"];
+	n0x6030000028f0:n -> n0x6030000028c0:s [color = green];
+	n0x6030000028f0 -> n0x603000002920;
+	NULL_R_0x6030000028f0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000028f0 -> NULL_R_0x6030000028f0;
+
+	n0x603000002920 [label="{Tree element 0x603000002920.| arg = 278 | parent = 0x6030000028f0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002920:n -> n0x6030000028f0:s [color = green];
+	NULL_L_0x603000002920 [label="NULL", fillcolor = "#000000"];
+	n0x603000002920 -> NULL_L_0x603000002920;
+	NULL_R_0x603000002920 [label="NULL", fillcolor = "#000000"];
+	n0x603000002920 -> NULL_R_0x603000002920;
+
+	n0x603000002950 [label="{Tree element 0x603000002950.| arg = 335 | parent = 0x6030000028c0 |{ left = 0x0 | right = 0x603000002980 }}"];
+	n0x603000002950:n -> n0x6030000028c0:s [color = green];
+	NULL_L_0x603000002950 [label="NULL", fillcolor = "#000000"];
+	n0x603000002950 -> NULL_L_0x603000002950;
+	n0x603000002950 -> n0x603000002980;
+
+	n0x603000002980 [label="{Tree element 0x603000002980.| arg = 393 | parent = 0x603000002950 |{ left = 0x6030000029b0 | right = 0x0 }}"];
+	n0x603000002980:n -> n0x603000002950:s [color = green];
+	n0x603000002980 -> n0x6030000029b0;
+	NULL_R_0x603000002980 [label="NULL", fillcolor = "#000000"];
+	n0x603000002980 -> NULL_R_0x603000002980;
+
+	n0x6030000029b0 [label="{Tree element 0x6030000029b0.| arg = 336 | parent = 0x603000002980 |{ left = 0x0 | right = 0x6030000029e0 }}"];
+	n0x6030000029b0:n -> n0x603000002980:s [color = green];
+	NULL_L_0x6030000029b0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000029b0 -> NULL_L_0x6030000029b0;
+	n0x6030000029b0 -> n0x6030000029e0;
+
+	n0x6030000029e0 [label="{Tree element 0x6030000029e0.| arg = 357 | parent = 0x6030000029b0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x6030000029e0:n -> n0x6030000029b0:s [color = green];
+	NULL_L_0x6030000029e0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000029e0 -> NULL_L_0x6030000029e0;
+	NULL_R_0x6030000029e0 [label="NULL", fillcolor = "#000000"];
+	n0x6030000029e0 -> NULL_R_0x6030000029e0;
+
+	n0x603000002a10 [label="{Tree element 0x603000002a10.| arg = 492 | parent = 0x603000002890 |{ left = 0x603000002a40 | right = 0x603000002a70 }}"];
+	n0x603000002a10:n -> n0x603000002890:s [color = green];
+	n0x603000002a10 -> n0x603000002a40;
+	n0x603000002a10 -> n0x603000002a70;
+
+	n0x603000002a40 [label="{Tree element 0x603000002a40.| arg = 485 | parent = 0x603000002a10 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002a40:n -> n0x603000002a10:s [color = green];
+	NULL_L_0x603000002a40 [label="NULL", fillcolor = "#000000"];
+	n0x603000002a40 -> NULL_L_0x603000002a40;
+	NULL_R_0x603000002a40 [label="NULL", fillcolor = "#000000"];
+	n0x603000002a40 -> NULL_R_0x603000002a40;
+
+	n0x603000002a70 [label="{Tree element 0x603000002a70.| arg = 503 | parent = 0x603000002a10 |{ left = 0x0 | right = 0x603000002aa0 }}"];
+	n0x603000002a70:n -> n0x603000002a10:s [color = green];
+	NULL_L_0x603000002a70 [label="NULL", fillcolor = "#000000"];
+	n0x603000002a70 -> NULL_L_0x603000002a70;
+	n0x603000002a70 -> n0x603000002aa0;
+
+	n0x603000002aa0 [label="{Tree element 0x603000002aa0.| arg = 512 | parent = 0x603000002a70 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002aa0:n -> n0x603000002a70:s [color = green];
+	NULL_L_0x603000002aa0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002aa0 -> NULL_L_0x603000002aa0;
+	NULL_R_0x603000002aa0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002aa0 -> NULL_R_0x603000002aa0;
+
+	n0x603000002ad0 [label="{Tree element 0x603000002ad0.| arg = 612 | parent = 0x603000002860 |{ left = 0x603000002b00 | right = 0x603000002b60 }}"];
+	n0x603000002ad0:n -> n0x603000002860:s [color = green];
+	n0x603000002ad0 -> n0x603000002b00;
+	n0x603000002ad0 -> n0x603000002b60;
+
+	n0x603000002b00 [label="{Tree element 0x603000002b00.| arg = 560 | parent = 0x603000002ad0 |{ left = 0x0 | right = 0x603000002b30 }}"];
+	n0x603000002b00:n -> n0x603000002ad0:s [color = green];
+	NULL_L_0x603000002b00 [label="NULL", fillcolor = "#000000"];
+	n0x603000002b00 -> NULL_L_0x603000002b00;
+	n0x603000002b00 -> n0x603000002b30;
+
+	n0x603000002b30 [label="{Tree element 0x603000002b30.| arg = 579 | parent = 0x603000002b00 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002b30:n -> n0x603000002b00:s [color = green];
+	NULL_L_0x603000002b30 [label="NULL", fillcolor = "#000000"];
+	n0x603000002b30 -> NULL_L_0x603000002b30;
+	NULL_R_0x603000002b30 [label="NULL", fillcolor = "#000000"];
+	n0x603000002b30 -> NULL_R_0x603000002b30;
+
+	n0x603000002b60 [label="{Tree element 0x603000002b60.| arg = 633 | parent = 0x603000002ad0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002b60:n -> n0x603000002ad0:s [color = green];
+	NULL_L_0x603000002b60 [label="NULL", fillcolor = "#000000"];
+	n0x603000002b60 -> NULL_L_0x603000002b60;
+	NULL_R_0x603000002b60 [label="NULL", fillcolor = "#000000"];
+	n0x603000002b60 -> NULL_R_0x603000002b60;
+
+	n0x603000002b90 [label="{Tree element 0x603000002b90.| arg = 709 | parent = 0x6030000027d0 |{ left = 0x603000002bc0 | right = 0x603000002bf0 }}"];
+	n0x603000002b90:n -> n0x6030000027d0:s [color = green];
+	n0x603000002b90 -> n0x603000002bc0;
+	n0x603000002b90 -> n0x603000002bf0;
+
+	n0x603000002bc0 [label="{Tree element 0x603000002bc0.| arg = 672 | parent = 0x603000002b90 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002bc0:n -> n0x603000002b90:s [color = green];
+	NULL_L_0x603000002bc0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002bc0 -> NULL_L_0x603000002bc0;
+	NULL_R_0x603000002bc0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002bc0 -> NULL_R_0x603000002bc0;
+
+	n0x603000002bf0 [label="{Tree element 0x603000002bf0.| arg = 729 | parent = 0x603000002b90 |{ left = 0x0 | right = 0x603000002c20 }}"];
+	n0x603000002bf0:n -> n0x603000002b90:s [color = green];
+	NULL_L_0x603000002bf0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002bf0 -> NULL_L_0x603000002bf0;
+	n0x603000002bf0 -> n0x603000002c20;
+
+	n0x603000002c20 [label="{Tree element 0x603000002c20.| arg = 745 | parent = 0x603000002bf0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002c20:n -> n0x603000002bf0:s [color = green];
+	NULL_L_0x603000002c20 [label="NULL", fillcolor = "#000000"];
+	n0x603000002c20 -> NULL_L_0x603000002c20;
+	NULL_R_0x603000002c20 [label="NULL", fillcolor = "#000000"];
+	n0x603000002c20 -> NULL_R_0x603000002c20;
+
+	n0x603000002c50 [label="{Tree element 0x603000002c50.| arg = 930 | parent = 0x603000002590 |{ left = 0x603000002c80 | right = 0x603000002dd0 }}"];
+	n0x603000002c50:n -> n0x603000002590:s [color = green];
+	n0x603000002c50 -> n0x603000002c80;
+	n0x603000002c50 -> n0x603000002dd0;
+
+	n0x603000002c80 [label="{Tree element 0x603000002c80.| arg = 878 | parent = 0x603000002c50 |{ left = 0x603000002cb0 | right = 0x603000002da0 }}"];
+	n0x603000002c80:n -> n0x603000002c50:s [color = green];
+	n0x603000002c80 -> n0x603000002cb0;
+	n0x603000002c80 -> n0x603000002da0;
+
+	n0x603000002cb0 [label="{Tree element 0x603000002cb0.| arg = 840 | parent = 0x603000002c80 |{ left = 0x603000002ce0 | right = 0x0 }}"];
+	n0x603000002cb0:n -> n0x603000002c80:s [color = green];
+	n0x603000002cb0 -> n0x603000002ce0;
+	NULL_R_0x603000002cb0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002cb0 -> NULL_R_0x603000002cb0;
+
+	n0x603000002ce0 [label="{Tree element 0x603000002ce0.| arg = 816 | parent = 0x603000002cb0 |{ left = 0x603000002d10 | right = 0x603000002d40 }}"];
+	n0x603000002ce0:n -> n0x603000002cb0:s [color = green];
+	n0x603000002ce0 -> n0x603000002d10;
+	n0x603000002ce0 -> n0x603000002d40;
+
+	n0x603000002d10 [label="{Tree element 0x603000002d10.| arg = 810 | parent = 0x603000002ce0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002d10:n -> n0x603000002ce0:s [color = green];
+	NULL_L_0x603000002d10 [label="NULL", fillcolor = "#000000"];
+	n0x603000002d10 -> NULL_L_0x603000002d10;
+	NULL_R_0x603000002d10 [label="NULL", fillcolor = "#000000"];
+	n0x603000002d10 -> NULL_R_0x603000002d10;
+
+	n0x603000002d40 [label="{Tree element 0x603000002d40.| arg = 826 | parent = 0x603000002ce0 |{ left = 0x603000002d70 | right = 0x0 }}"];
+	n0x603000002d40:n -> n0x603000002ce0:s [color = green];
+	n0x603000002d40 -> n0x603000002d70;
+	NULL_R_0x603000002d40 [label="NULL", fillcolor = "#000000"];
+	n0x603000002d40 -> NULL_R_0x603000002d40;
+
+	n0x603000002d70 [label="{Tree element 0x603000002d70.| arg = 821 | parent = 0x603000002d40 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002d70:n -> n0x603000002d40:s [color = green];
+	NULL_L_0x603000002d70 [label="NULL", fillcolor = "#000000"];
+	n0x603000002d70 -> NULL_L_0x603000002d70;
+	NULL_R_0x603000002d70 [label="NULL", fillcolor = "#000000"];
+	n0x603000002d70 -> NULL_R_0x603000002d70;
+
+	n0x603000002da0 [label="{Tree element 0x603000002da0.| arg = 923 | parent = 0x603000002c80 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002da0:n -> n0x603000002c80:s [color = green];
+	NULL_L_0x603000002da0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002da0 -> NULL_L_0x603000002da0;
+	NULL_R_0x603000002da0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002da0 -> NULL_R_0x603000002da0;
+
+	n0x603000002dd0 [label="{Tree element 0x603000002dd0.| arg = 987 | parent = 0x603000002c50 |{ left = 0x603000002e00 | right = 0x0 }}"];
+	n0x603000002dd0:n -> n0x603000002c50:s [color = green];
+	n0x603000002dd0 -> n0x603000002e00;
+	NULL_R_0x603000002dd0 [label="NULL", fillcolor = "#000000"];
+	n0x603000002dd0 -> NULL_R_0x603000002dd0;
+
+	n0x603000002e00 [label="{Tree element 0x603000002e00.| arg = 933 | parent = 0x603000002dd0 |{ left = 0x0 | right = 0x603000002e30 }}"];
+	n0x603000002e00:n -> n0x603000002dd0:s [color = green];
+	NULL_L_0x603000002e00 [label="NULL", fillcolor = "#000000"];
+	n0x603000002e00 -> NULL_L_0x603000002e00;
+	n0x603000002e00 -> n0x603000002e30;
+
+	n0x603000002e30 [label="{Tree element 0x603000002e30.| arg = 979 | parent = 0x603000002e00 |{ left = 0x603000002e60 | right = 0x0 }}"];
+	n0x603000002e30:n -> n0x603000002e00:s [color = green];
+	n0x603000002e30 -> n0x603000002e60;
+	NULL_R_0x603000002e30 [label="NULL", fillcolor = "#000000"];
+	n0x603000002e30 -> NULL_R_0x603000002e30;
+
+	n0x603000002e60 [label="{Tree element 0x603000002e60.| arg = 967 | parent = 0x603000002e30 |{ left = 0x0 | right = 0x0 }}"];
+	n0x603000002e60:n -> n0x603000002e30:s [color = green];
+	NULL_L_0x603000002e60 [label="NULL", fillcolor = "#000000"];
+	n0x603000002e60 -> NULL_L_0x603000002e60;
+	NULL_R_0x603000002e60 [label="NULL", fillcolor = "#000000"];
+	n0x603000002e60 -> NULL_R_0x603000002e60;
 }

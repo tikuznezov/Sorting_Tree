@@ -12,14 +12,13 @@
 #include     <ctype.h>
 #include    <stdarg.h>
 
-// #define _DEBUG
+#define _DEBUG
 // #define _FUNCTION_STATE
 #include "log.cpp"
 #include "term_colors.h"
 
-typedef double tree_element_t;
-#define PR_TREE_EL "%-8lg"
-const tree_element_t POISON = 67676767;
+typedef int tree_element_t;
+#define TREE_SPEC "%d"
 
 
 // Defines and structures
@@ -31,7 +30,10 @@ enum ERR_CODE
     NO_ERROR              = 0,
     GET_NULL_TREE_POINTER = 't'+'r'+'e'+'e',
     GET_NULL_NODE_POINTER,
-    PRINT_NODE_RECURSION_LIMIT
+    PRINT_NODE_RECURSION_LIMIT,
+    FILE_DOES_NOT_EXIST,
+    GET_NULL_STRING_TO_READ,
+    INCORRECT_READ_FILE_FORMAT
 };
 
 struct TreeN
@@ -83,7 +85,7 @@ int PrintTreeNode(TreeN *node)
     if (node != NULL)
     {
         // Create node
-        fp("\n\tn%p [label=\"{Tree element %p.| arg = " PR_TREE_EL " | parent = %p |{ left = %p | right = %p }}\"];\n", node, node, node->data, node->parent, node->left, node->right);
+        fp("\n\tn%p [label=\"{Tree element %p.| arg = " TREE_SPEC " | parent = %p |{ left = %p | right = %p }}\"];\n", node, node, node->data, node->parent, node->left, node->right);
         fp(  "\tn%p:n -> n%p:s [color = green];\n", node, node->parent);
 
         // Left descendant
@@ -189,7 +191,7 @@ void PrintNodeAsTable(const TreeN * const node_p)
     PR("|-----------------------|\n");
     PR("| POINTER: "     "%-12p" " |\n",    node_p);
     PR("|-----------------------|\n");
-    PR("|    DATA: " PR_TREE_EL "     |\n", node_p->data);
+    PR("|    DATA: " TREE_SPEC "     |\n", node_p->data);
     PR("|-----------------------|\n");
     PR("|    LEFT: "     "%-12p" " |\n",    node_p->left);
     PR("|-----------------------|\n");
@@ -206,23 +208,35 @@ void PrintNode(const TreeN * const node_p)
     PR_FST;
     NAMED_ASSERT(node_p, GET_NULL_NODE_POINTER, "node");
 
-    PR("Tree node [Address = %p; Data = " PR_TREE_EL "; Left = %p; Right = %p]\n", node_p, node_p->data, node_p->left, node_p->right);
+    PR("Tree node [Address = %p; Data = " TREE_SPEC "; Left = %p; Right = %p]\n", node_p, node_p->data, node_p->left, node_p->right);
     PrintNodeAsTable(node_p);
 
     PR_FED;
     return;
 }
 
-int TreeCreator (Tree *tree)
+Tree * TreeCreator ()
 {
     PR_FST;
+    Tree *tree = (Tree *) calloc(1, sizeof(Tree));
+
     tree->root = NULL;
     tree->element_count = 0;
 
     TreeVerify(tree);
 
     PR_FED;
-    return global_error;
+    return tree;
+}
+
+void TreeDestructor(Tree *tree)
+{
+    NAMED_ASSERT(tree, GET_NULL_TREE_POINTER, "tree to delete");
+
+    *tree = {};
+    free(tree);
+
+    return;
 }
 
 TreeN * NewNode (tree_element_t arg)
@@ -267,17 +281,17 @@ TreeN * FinderInTree(Tree *tree, tree_element_t find_val)
     TreeVerify(tree);
 
     TreeN *find_pointer = NULL;
-    PR("Finding <" PR_TREE_EL "> element...\n", find_val);
+    PR("Finding <" TREE_SPEC "> element...\n", find_val);
 
     find_pointer = FindTreeNodeByValueREC(tree->root, find_val);
 
     if (find_pointer == NULL)
     {
-        printf("Failed to find <" PR_TREE_EL "> in tree. Element doesn't exist.\n", find_val);
+        printf("Failed to find <" TREE_SPEC "> in tree. Element doesn't exist.\n", find_val);
     }
     else
     {
-        printf("Element <" PR_TREE_EL "> successfully found.\n", find_pointer->data);
+        printf("Element <" TREE_SPEC "> successfully found.\n", find_pointer->data);
     }
 
     PR_FED;
@@ -289,7 +303,7 @@ int TreeAdd     (Tree *tree, tree_element_t arg, TreeN *parent, const TREE_SIDES
     PR_FST;
     TreeVerify(tree);
 
-    PR("Adding <" PR_TREE_EL "> to the %s side...\n", arg, ((side == LEFT) ? "left" : "right"));
+    PR("Adding <" TREE_SPEC "> to the %s side...\n", arg, ((side == LEFT) ? "left" : "right"));
     PR("Parent name = \"%p\"\n", parent);
     // tree is void
     if (tree->root == NULL)
@@ -308,7 +322,7 @@ int TreeAdd     (Tree *tree, tree_element_t arg, TreeN *parent, const TREE_SIDES
     }
     else
     {
-        PR("Parent is null pointer. Crush addiction (" PR_TREE_EL ") node to tree.\n", arg);
+        PR("Parent is null pointer. Crush addiction (" TREE_SPEC ") node to tree.\n", arg);
     }
 
     TreeVerify(tree);
@@ -386,7 +400,192 @@ int TreeDelete  (Tree *tree, TreeN *del_node, const TREE_SIDES replace)
     return global_error;
 }
 
+int WriteNode   (FILE *file, const TreeN *node)
+{
+    NAMED_ASSERT(file, FILE_DOES_NOT_EXIST, "FILE NAME");
 
+    fprintf(    file, "("); // FIXME
+    if (node == NULL)
+    {
+        fprintf(file, "NIL");
+    }
+    else
+    {
+        NAMED_ASSERT(node, GET_NULL_NODE_POINTER, "printing node");
+
+        fprintf(    file, TREE_SPEC, node->data);
+        // fprintf(    file, "(");
+        WriteNode(  file, node-> left);
+        // fprintf(    file, ")(");
+        WriteNode(  file, node->right);
+        // fprintf(    file, ")");
+    }
+    fprintf(    file, ")"); // FIXME
+
+    return 0;
+}
+
+int WriteTree   (const char *file_name, const Tree  *tree)
+{
+    NAMED_ASSERT(file_name, FILE_DOES_NOT_EXIST, "FILE NAME");
+    TreeVerify(tree);
+
+    FILE *writing_file = fopen(file_name, "w");
+
+    WriteNode(writing_file, tree->root);
+
+    fclose(writing_file);
+
+    return 0;
+}
+
+#define ARGUMENT_SPEC "%[A-Za-z _-,.?!;:' 0-9 \"\t]"
+TreeN *ReadNode    (char *tree_data, const Tree *tree, size_t *shift, TreeN *parent)
+{
+    NAMED_ASSERT(tree_data, GET_NULL_STRING_TO_READ, "read string");
+    PR("Read node (tree data pointer = %p, tree pointer = %p, shift = %zu)\n", tree_data, tree, *shift);
+    char parentheses[2]   = "";
+    char arg[MAX_STR_LEN] = "";
+    int temp_shift;
+    TreeN *new_node = NULL;
+
+    // как такие инициализировать?
+    tree_element_t node_data;
+
+    PR("Check opend \"(\".");
+    if (1 == sscanf(tree_data + *shift, "%1[(]%n", parentheses, &temp_shift))
+    {
+        *shift += (size_t)temp_shift;
+        PR(" Skip %d symbols.\n", temp_shift);
+
+        // Read node data
+        if (1 != sscanf(tree_data + *shift, ARGUMENT_SPEC"%n", arg, &temp_shift))
+        {
+            PR(PRED "Error in reading node argument. Incorrect format.\n" DEF_COL);
+            global_error = INCORRECT_READ_FILE_FORMAT;
+        }
+        *shift += (size_t)temp_shift;
+        PR("Get \"%s\". Skip %d symbols.\n", arg, temp_shift);
+
+        if (!strncmp(arg, "NIL", 4))
+        {
+            PR("Get NIL. Return NULL;\n");
+            new_node = NULL;
+        }
+        else if (1 == sscanf(arg, TREE_SPEC, &node_data))
+        {
+            PR("Creation new node...");
+            new_node = NewNode(node_data);
+            new_node->parent = parent;
+            PR(" Completed.\n");
+            PR("Call left node...");
+            new_node->left  = ReadNode(tree_data, tree, shift, new_node);
+            PR("Completed.\n");
+            PR("Call right node...");
+            new_node->right = ReadNode(tree_data, tree, shift, new_node);
+            PR("Completed.\n");
+        }
+    }
+    if (1 != sscanf(tree_data + *shift, "%1[)]%n", parentheses, &temp_shift))
+    {
+        PR(PRED "Read file format is incorrect!\n" DEF_COL);
+        global_error = INCORRECT_READ_FILE_FORMAT;
+    }
+    *shift += (size_t)temp_shift;
+
+    #ifdef _DEBUG
+        Tree local_tree = {};
+        local_tree.root = new_node;
+        PrintTreeGV(&local_tree);
+    #endif
+
+    return new_node;
+}
+
+Tree *ReadTree    (const char *file_name)
+{
+    NAMED_ASSERT(file_name, FILE_DOES_NOT_EXIST, "FILE NAME");
+
+    Tree *tree = TreeCreator();
+    TreeVerify(tree);
+
+    size_t file_size = (size_t) SizeofFile(file_name);
+    PR("File size = %zu;\n", file_size);
+
+    int tree_file    = open(file_name, O_RDONLY);
+    if (tree_file == -1)
+        perror("Tree file wasn't opened.");
+    PR("file opend.\n");
+
+    char *tree_data  = (char *) calloc(file_size + 2, sizeof(char));
+    if (tree_data == NULL)
+        perror("Can't get enough memory to read file.");
+    PR("Buffer created.\n");
+
+    if (read(tree_file, tree_data, file_size) == -1)
+        perror("Unsuccessful read file.");
+    PR("File read.\n");
+
+    size_t shift = 0;
+    tree->root = ReadNode(tree_data, tree, &shift, NULL);
+
+    return tree;
+}
+
+TreeN *FindNearParent(TreeN *node, tree_element_t arg)
+{
+    if (node == NULL)
+        return NULL;
+
+    if      (node->data < arg)
+    {
+        if (node->right == NULL) return node;
+        return FindNearParent(node->right, arg);
+    }
+    else if (node->data > arg)
+    {
+        if (node->left == NULL) return node;
+        return FindNearParent(node->left, arg);
+    }
+    else if (node->data == arg)
+    {
+        printf("Element in tree.\n");
+        return NULL;
+    }
+
+    return NULL;
+}
+
+int TreeSortAdd   (Tree *tree, tree_element_t arg)
+{
+    PR_FST;
+    TreeVerify(tree);
+
+    if (tree->root == NULL)
+    {
+        TreeAdd(tree, arg, NULL, RIGHT);
+        return 0;
+    }
+
+    TreeN *parent_node = FindNearParent(tree->root, arg);
+    if (parent_node == NULL)
+    {
+        PR("Node not found or already exist.\n");
+        return 0;
+    }
+
+    if (arg > parent_node->data)
+    {
+        TreeAdd(tree, arg, parent_node, RIGHT);
+    }
+    else
+    {
+        TreeAdd(tree, arg, parent_node, LEFT);
+    }
+
+    PR_FED;
+    return 0;
+}
 
 // Main
 //-------------------------------------------------------------------------------------------
@@ -395,26 +594,51 @@ int main(void)
 {
     printf(PGREEN "------------------ RUN MAIN ------------------\n" DEF_COL);
 
-    Tree tree1 = {};
-    TreeCreator(&tree1);
+    Tree *tree1 = TreeCreator();
 
-    TreeAdd(&tree1, 52, NULL, RIGHT);
+    // TreeAdd(&tree1, 52, NULL, RIGHT);
 
-    TreeN *p67 = FinderInTree(&tree1, 67);
+    // TreeAdd(&tree1, 67, FinderInTree(&tree1, 52), RIGHT);
+    // TreeAdd(&tree1, 1488, FinderInTree(&tree1, 67), RIGHT);
+    // TreeAdd(&tree1, 6752, FinderInTree(&tree1, 67), RIGHT);
+    // TreeAdd(&tree1, 111, FinderInTree(&tree1, 67), LEFT);
 
-    TreeAdd(&tree1, 67, FinderInTree(&tree1, 52), RIGHT);
-    TreeAdd(&tree1, 1488.12312, FinderInTree(&tree1, 67), RIGHT);
-    TreeAdd(&tree1, 6752, FinderInTree(&tree1, 67), RIGHT);
-    TreeAdd(&tree1, 111, FinderInTree(&tree1, 67), LEFT);
+    // WriteTree("porno.txt", &tree1);
+    // PrintTreeGV(&tree1);
 
-    PrintTreeGV(&tree1);
+    // TreeDelete(&tree1, FinderInTree(&tree1, 67), RIGHT);
+    // TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
+    // TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
 
-    TreeDelete(&tree1, FinderInTree(&tree1, 67), RIGHT);
-    TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
-    TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
+    // WriteTree("porno1.txt", &tree1);
+    // PrintTreeGV(&tree1);
 
-    PrintTreeGV(&tree1);
+    // TreeDelete(&tree1, tree1.root, RIGHT);
+    // WriteTree("porno2.txt", &tree1);
+    // PrintTreeGV(&tree1);
 
+    // TreeDelete(&tree1, tree1.root, RIGHT);
+    // WriteTree("porno3.txt", &tree1);
+    // PrintTreeGV(&tree1);
+
+    // TreeDelete(&tree1, tree1.root, RIGHT);
+    // WriteTree("porno4.txt", &tree1);
+    // PrintTreeGV(&tree1);
+
+
+    // ReadTree("porno.txt", &tree1);
+    printf(PGREEN "%p;\n" DEF_COL, FindNearParent(tree1->root, 32));
+    TreeSortAdd(tree1, 67);
+    for (int i = 0; i < 50; i++)
+    {
+        TreeSortAdd(tree1, rand()%1000);
+    }
+    // PrintTreeGV(tree1);
+
+    WriteTree("porno.txt", tree1);
+    getchar();
+    Tree *porno = ReadTree("porno.txt");
+    PrintTreeGV(porno);
 
     printf(PYELLOW "------------------ END MAIN ------------------\n" DEF_COL);
     return 0;
