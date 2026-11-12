@@ -40,7 +40,7 @@ void ClearTerm(void);
     printf("\\/----------------------------------------------------------------------------------\\/\n"); \
     printf(PYELLOW "- RUN %s:\n\n" DEF_COL, __FUNCTION__)
 #define PR_FED                                                                                      \
-    printf(PCYAN "\n- END %s;" DEF_COL, __FUNCTION__); ClearTerm();                               \
+    printf(PCYAN "\n- END %s;\n" DEF_COL, __FUNCTION__); ClearTerm();                               \
     printf("/\\----------------------------------------------------------------------------------/\\\n")
 #else
     #define PR_FST

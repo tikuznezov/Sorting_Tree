@@ -1,28 +1,22 @@
 
 
-digraph TreeVerify {
+digraph main {
 rankdir=TB; splines=ortho; nodesep = 1; bgcolor="#FFFFFF";
 node [shape = Mrecord, style = filled, fillcolor = "#626ae0", fontcolor = "#ffffff", fontname="Helvetica-Bold"];
 
 # ZERO NODE
-	n0x0 [label="NULL"];
+	n0x0 [label="Root parent"];
 
-	n0x121606000 [label="{Tree element 0x121606000.| arg = 52       | parent = 0x0 |{ left = 0x0 | right = 0x121606020 }}"];
-	n0x121606000:n -> n0x0:s [color = green];
-	NULL_L_0x16d33ac10 [label="NULL", fillcolor = "#000000"];
-	n0x121606000 -> NULL_L_0x16d33ac10;
-	n0x121606000 -> n0x121606020;
+	n0x152605fa0 [label="{Tree element 0x152605fa0.| arg = 1488.12  | parent = 0x0 |{ left = 0x152605d10 | right = 0x0 }}"];
+	n0x152605fa0:n -> n0x0:s [color = green];
+	n0x152605fa0 -> n0x152605d10;
+	NULL_R_0x152605fa0 [label="NULL", fillcolor = "#000000"];
+	n0x152605fa0 -> NULL_R_0x152605fa0;
 
-	n0x121606020 [label="{Tree element 0x121606020.| arg = 67       | parent = 0x121606000 |{ left = 0x0 | right = 0x121605f80 }}"];
-	n0x121606020:n -> n0x121606000:s [color = green];
-	NULL_L_0x16d33ab90 [label="NULL", fillcolor = "#000000"];
-	n0x121606020 -> NULL_L_0x16d33ab90;
-	n0x121606020 -> n0x121605f80;
-
-	n0x121605f80 [label="{Tree element 0x121605f80.| arg = 1488     | parent = 0x121606020 |{ left = 0x0 | right = 0x0 }}"];
-	n0x121605f80:n -> n0x121606020:s [color = green];
-	NULL_L_0x16d33ab10 [label="NULL", fillcolor = "#000000"];
-	n0x121605f80 -> NULL_L_0x16d33ab10;
-	NULL_R_0x16d33ab10 [label="NULL", fillcolor = "#000000"];
-	n0x121605f80 -> NULL_R_0x16d33ab10;
+	n0x152605d10 [label="{Tree element 0x152605d10.| arg = 111      | parent = 0x152605fa0 |{ left = 0x0 | right = 0x0 }}"];
+	n0x152605d10:n -> n0x152605fa0:s [color = green];
+	NULL_L_0x152605d10 [label="NULL", fillcolor = "#000000"];
+	n0x152605d10 -> NULL_L_0x152605d10;
+	NULL_R_0x152605d10 [label="NULL", fillcolor = "#000000"];
+	n0x152605d10 -> NULL_R_0x152605d10;
 }

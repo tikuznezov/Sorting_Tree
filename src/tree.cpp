@@ -12,14 +12,13 @@
 #include     <ctype.h>
 #include    <stdarg.h>
 
-#define _DEBUG
-#define _GV
+// #define _DEBUG
 // #define _FUNCTION_STATE
 #include "log.cpp"
 #include "term_colors.h"
 
-typedef int tree_element_t;
-#define PR_TREE_EL "%-8d"
+typedef double tree_element_t;
+#define PR_TREE_EL "%-8lg"
 const tree_element_t POISON = 67676767;
 
 
@@ -41,13 +40,13 @@ struct TreeN
     TreeN * parent;
     TreeN * left;
     TreeN * right;
-};    
+};
 
 enum TREE_SIDES
 {
     RIGHT = 0,
     LEFT = 1
-};    
+};
 
 struct Tree
 {
@@ -67,15 +66,12 @@ const size_t SYS_COMMAND_LENGTH = 100;
 void CompPng(const char *name)
 {
     static size_t comp_pic_number = 1;
-    #ifdef _GV
-    #undef _GV
     extern FILE *gv;
     fclose(gv);
         gv = NULL;
         char sys_com[SYS_COMMAND_LENGTH];
         snprintf(sys_com, SYS_COMMAND_LENGTH, "dot -Tsvg Tree.gv -o pictures/%s_%zu.svg", name, comp_pic_number++);
         system(sys_com);
-    #endif
 }
 
 // recursion
@@ -94,8 +90,8 @@ int PrintTreeNode(TreeN *node)
         if (node->left == NULL)
         {
             // Create NULL descendant
-            fp("\tNULL_L_%p [label=\"NULL\", fillcolor = \"#000000\"];\n", &node);
-            fp("\tn%p -> NULL_L_%p;\n", node, &node);
+            fp("\tNULL_L_%p [label=\"NULL\", fillcolor = \"#000000\"];\n", node);
+            fp("\tn%p -> NULL_L_%p;\n", node, node);
         }
         else
         {
@@ -106,8 +102,8 @@ int PrintTreeNode(TreeN *node)
         if (node->right == NULL)
         {
             // create NULL descendant
-            fp("\tNULL_R_%p [label=\"NULL\", fillcolor = \"#000000\"];\n", &node);
-            fp("\tn%p -> NULL_R_%p;\n", node, &node);
+            fp("\tNULL_R_%p [label=\"NULL\", fillcolor = \"#000000\"];\n", node);
+            fp("\tn%p -> NULL_R_%p;\n", node, node);
         }
         else
         {
@@ -137,11 +133,10 @@ int PrintTreeNode(TreeN *node)
 int PrintTreeGV_DEF(const Tree * const tree, const char *name)
 {
     PR_FST;
-    #ifndef _GV
-        #define _GV
-        extern FILE *gv;
-        gv = fopen("Tree.gv", "w");
-    #endif
+    extern FILE *gv;
+    gv = fopen("Tree.gv", "w");
+    
+    PR("Start printing to GV...");
 
     // graph info
     fp("\n\ndigraph %s {\n", name);
@@ -149,7 +144,7 @@ int PrintTreeGV_DEF(const Tree * const tree, const char *name)
     fp("node [shape = Mrecord, style = filled, fillcolor = \"#626ae0\", fontcolor = \"#ffffff\", fontname=\"Helvetica-Bold\"];\n");
 
     // zero node
-    fp("\n# ZERO NODE\n\tn0x0 [label=\"NULL\"];\n");
+    fp("\n# ZERO NODE\n\tn0x0 [label=\"Root parent\"];\n");
 
     // tree nodes
     PrintTreeNode(tree->root);
@@ -158,6 +153,8 @@ int PrintTreeGV_DEF(const Tree * const tree, const char *name)
 
     CompPng("tree_pic");
 
+    PR(" Completed.\n\n");
+
     PR_FED;
     return 0;
 }
@@ -165,18 +162,20 @@ int PrintTreeGV_DEF(const Tree * const tree, const char *name)
 // Functions
 //-------------------------------------------------------------------------------------------
 
-void TreeVerify(Tree *tree)
+void TreeVerify(const Tree * const tree)
 {
     PR_FST;
     NAMED_ASSERT(tree, GET_NULL_TREE_POINTER, "tree");
 
-    if (tree->root == NULL)
-    {
-        PR("* Tree root is NULL pointer. Tree is void.\n");
-        return;
-    }
+    #ifdef _DEBUG
+        if (tree->root == NULL)
+        {
+            PR("* Tree root is NULL pointer. Tree is void.\n");
+            return;
+        }
 
-    PrintTreeGV(tree);
+        PrintTreeGV(tree);
+    #endif
 
     PR_FED;
     return;
@@ -253,9 +252,9 @@ TreeN * FindTreeNodeByValueREC(TreeN *root_node, tree_element_t arg)
     {
         if (root_node->data == arg) 
             result = root_node;
-        if (result == NULL)    
+        if (result == NULL)
             result = FindTreeNodeByValueREC(root_node->left, arg);
-        if (result == NULL)    
+        if (result == NULL)
             result = FindTreeNodeByValueREC(root_node->right, arg);
     }
 
@@ -268,7 +267,7 @@ TreeN * FinderInTree(Tree *tree, tree_element_t find_val)
     TreeVerify(tree);
 
     TreeN *find_pointer = NULL;
-    printf("Finding <" PR_TREE_EL "> element...\n", find_val);
+    PR("Finding <" PR_TREE_EL "> element...\n", find_val);
 
     find_pointer = FindTreeNodeByValueREC(tree->root, find_val);
 
@@ -288,12 +287,14 @@ TreeN * FinderInTree(Tree *tree, tree_element_t find_val)
 int TreeAdd     (Tree *tree, tree_element_t arg, TreeN *parent, const TREE_SIDES side)
 {
     PR_FST;
-    NAMED_ASSERT(tree, GET_NULL_TREE_POINTER, "tree");
     TreeVerify(tree);
 
+    PR("Adding <" PR_TREE_EL "> to the %s side...\n", arg, ((side == LEFT) ? "left" : "right"));
+    PR("Parent name = \"%p\"\n", parent);
     // tree is void
     if (tree->root == NULL)
     {
+        PR("Tree haven'n root. Creating root node.\n");
         tree->root = NewNode(arg);
     }
     else if (parent != NULL)
@@ -316,13 +317,83 @@ int TreeAdd     (Tree *tree, tree_element_t arg, TreeN *parent, const TREE_SIDES
 }
 
 
+#define LINK_FROM_PARENT_TO_DEC ((del_node != tree->root)                                                                         ? \
+                                 (((del_node->parent)->left == del_node) ? (del_node->parent)->left : (del_node->parent)->right)  : \
+                                 (tree->root)                                                                                        )
+
+int TreeDelete  (Tree *tree, TreeN *del_node, const TREE_SIDES replace)
+{
+    PR_FST;
+    TreeVerify(tree);
+    if (del_node == NULL)
+    {
+        printf("Try to delete node by <%p> address (or node doesn't exist).\n", del_node);
+        return 0;
+    }
+    NAMED_ASSERT(del_node, GET_NULL_NODE_POINTER, "DELETED NODE");
+
+    PR("Deleting node %p. \nParent = %p; Left = %p; Right = %p;\n", del_node, del_node->parent, del_node->left, del_node->right);
+
+
+
+    if ((del_node->left == NULL) && (del_node->right == NULL))
+    {
+        PR("Deleting node without descendants...");
+        // delete parent link
+        LINK_FROM_PARENT_TO_DEC = NULL;
+    }
+    else if (del_node->left == NULL)
+    {
+        PR("Deleting node with only right descendant...");
+        LINK_FROM_PARENT_TO_DEC = del_node->right;
+        del_node->right->parent = del_node->parent;
+    }
+    else if (del_node->right == NULL)
+    {
+        PR("Deleting node with only left descendant...");
+        LINK_FROM_PARENT_TO_DEC = del_node->left;
+        del_node->left ->parent = del_node->parent;
+    }
+    else if ((del_node->left != NULL) && (del_node->right != NULL))
+    {
+        PR("Deleting node with two descendants...");
+        if (replace == LEFT)
+        {
+            LINK_FROM_PARENT_TO_DEC = del_node->left;
+            del_node->left->right   = del_node->right;
+            del_node->right->parent = del_node->left;
+            del_node->left->parent  = del_node->parent;
+        }
+        else if (replace == RIGHT)
+        {
+            LINK_FROM_PARENT_TO_DEC  = del_node->right;
+            del_node->right->left    = del_node->left;
+            del_node->left->parent   = del_node->right;
+            del_node->right->parent  = del_node->parent;
+        }
+    }
+    else
+    {
+        PR("--> Unknown delete case! Break deleting.\n");
+        return -1;
+    }
+
+    *del_node = {};
+    free(del_node);
+
+    PR("\tDeleting finished.\n");
+    TreeVerify(tree);
+    return global_error;
+}
+
+
 
 // Main
 //-------------------------------------------------------------------------------------------
 
 int main(void)
 {
-    PR(PGREEN "------------------ RUN MAIN ------------------\n" DEF_COL);
+    printf(PGREEN "------------------ RUN MAIN ------------------\n" DEF_COL);
 
     Tree tree1 = {};
     TreeCreator(&tree1);
@@ -332,10 +403,19 @@ int main(void)
     TreeN *p67 = FinderInTree(&tree1, 67);
 
     TreeAdd(&tree1, 67, FinderInTree(&tree1, 52), RIGHT);
-    TreeAdd(&tree1, 1488, FinderInTree(&tree1, 67), RIGHT);
+    TreeAdd(&tree1, 1488.12312, FinderInTree(&tree1, 67), RIGHT);
+    TreeAdd(&tree1, 6752, FinderInTree(&tree1, 67), RIGHT);
+    TreeAdd(&tree1, 111, FinderInTree(&tree1, 67), LEFT);
 
-    // PrintTreeGV(&tree1);
+    PrintTreeGV(&tree1);
 
-    PR(PYELLOW "------------------ END MAIN ------------------\n" DEF_COL);
+    TreeDelete(&tree1, FinderInTree(&tree1, 67), RIGHT);
+    TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
+    TreeDelete(&tree1, FinderInTree(&tree1, 52), RIGHT);
+
+    PrintTreeGV(&tree1);
+
+
+    printf(PYELLOW "------------------ END MAIN ------------------\n" DEF_COL);
     return 0;
 }
