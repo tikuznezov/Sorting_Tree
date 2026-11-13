@@ -316,7 +316,7 @@ int TreeAdd     (Tree *tree, tree_element_t arg, TreeN *parent, const TREE_SIDES
         NAMED_ASSERT(parent, GET_NULL_NODE_POINTER, "PARENT NODE");
         if (((side == LEFT) ? parent->left : parent->right) == NULL)
         //  (select side to link new node                   link new node) -> add parent link;
-            ((side == LEFT) ? parent->left : parent->right = NewNode(arg)) -> parent = parent;
+            (((side == LEFT) ? parent->left : parent->right) = NewNode(arg)) -> parent = parent;
         else
             printf("Node already exists. Adding new node has been broke.\n");
     }
